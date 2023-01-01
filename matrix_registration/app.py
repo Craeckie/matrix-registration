@@ -56,6 +56,7 @@ def cli(info, config_path):
 @pass_script_info
 def run_server(info):
     app = info.load_app()
+    Limiter(key_func=get_real_user_ip, app=app, default_limits=config.config.rate_limit)
     if config.config.allow_cors:
         CORS(app)
     serve(
